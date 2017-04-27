@@ -6,8 +6,9 @@ Created on Sun Apr 09 19:52:56 2017
 """
 
 from flask import Flask, jsonify, request, json, Response
+from flask_cors import CORS, cross_origin
 app = Flask(__name__)
-
+CORS(app)
 import psycopg2
 
 try:
@@ -49,6 +50,3 @@ WHERE	a.name IN ('%s')""" % ("','".join([str(i) for i in args])))
                              "properties": {"name": festival[2], "startDate": festival[3], "endDate": festival[4], "artists": festival[5]}})  
     
     return jsonify(type = 'FeatureCollection', features = festivalList)
-
-if __name__ == '__main__':
-    app.run(debug=True, port=8080)
