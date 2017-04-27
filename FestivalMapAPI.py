@@ -4,14 +4,14 @@ Created on Sun Apr 09 19:52:56 2017
 
 @author: Garrett
 """
-# import os
-# from dotenv import load_dotenv, find_dotenv
-# load_dotenv(find_dotenv())
-#
-# DB_NAME = os.environ.get("DB_NAME")
-# DB_USERNAME = os.environ.get("DB_USERNAME")
-# DB_URL = os.environ.get("DB_URL")
-# DB_PASSWORD = os.environ.get("DB_PASSWORD")
+import os
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
+
+DB_NAME = os.environ.get("DB_NAME")
+DB_USERNAME = os.environ.get("DB_USERNAME")
+DB_URL = os.environ.get("DB_URL")
+DB_PASSWORD = os.environ.get("DB_PASSWORD")
 
 from flask import Flask, jsonify, request, json, Response
 from flask_cors import CORS, cross_origin
@@ -19,12 +19,12 @@ app = Flask(__name__)
 CORS(app)
 import psycopg2
 
-# fullDbUrl = "dbname={DB_NAME} user={DB_USERNAME} host={DB_URL} password={DB_PASSWORD}".format(DB_NAME=DB_NAME)
+connURL = "dbname={} user={} host={} password={}".format(DB_NAME, DB_USERNAME, DB_URL, DB_PASSWORD)
 
 try:
-    conn = psycopg2.connect("dbname='FestivalMap' user='festivalmap' host='sportsdatabases.cki9udpbxnex.us-west-2.rds.amazonaws.com' password='festivalmap'")
+    conn = psycopg2.connect(connURL)
 except:
-    print "I am unable to connect to the database"
+    print("I am unable to connect to the database")
 
 cur = conn.cursor()
 

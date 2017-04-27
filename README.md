@@ -13,7 +13,7 @@
 * Ensure you have virtualenv installed with `$ pip3 install virtualenv`
 * environment variables are set in a .env file in the root directory. It is formatted `VARIABLE_1=VALUE_OF_VARIABLE1`  
 * run `$ virtualenv --no-site-packages --distribute -p python3 virtualPy && source virtualPy/bin/activate && pip3 install -r requirements.txt` to setup virtualenv and install the required packages from requirements.txt
-* run `$ export FLASK_APP=festivalMapAPI.py` to set the flask env variable to tell flask where the app is
+* run `$ export FLASK_APP=FestivalMapAPI.py` to set the flask env variable to tell flask where the app is
 * run `$ export FLASK_DEBUG=1` to set the flask server to debug mode with full logging & debug capability & auto-reload on change of python files
 * run `$ flask run` to launch the app
 
