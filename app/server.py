@@ -13,7 +13,7 @@ DB_USERNAME = os.environ.get("DB_USERNAME")
 DB_URL = os.environ.get("DB_URL")
 DB_PASSWORD = os.environ.get("DB_PASSWORD")
 
-from flask import Flask, jsonify, request, json, Response
+from flask import Flask, jsonify, request, json, Response, render_template
 from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 CORS(app)
@@ -27,6 +27,10 @@ except:
     print("I am unable to connect to the database")
 
 cur = conn.cursor()
+
+@app.route('/', methods=['GET'])
+def getHome():
+    return render_template('index.html')
 
 @app.route('/festivals', methods=['GET'])
 def getFestivals():
