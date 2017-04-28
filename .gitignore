@@ -1,3 +1,4 @@
 .env
 virtualPy
 *.pyc
+__pycache__
