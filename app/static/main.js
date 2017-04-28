@@ -6,7 +6,7 @@ $(function () {
     container: 'map', // container id
     style: 'mapbox://styles/laroberts2/cj0y98x3000en2rntgs8c2orb',
     center: [-96, 37.8], // starting position
-    zoom: 2 // starting zoom
+    zoom: 0 // starting zoom
   })
 
   $('.input-daterange').datepicker({
@@ -40,13 +40,7 @@ $(function () {
       }
     })
 
-    console.log(festivalReturn)
-
-    // retruned GEOJSON from  API call... currently dummy data
-  // $.get( "test.php", { name: "John", time: "2pm" } )
-
-    // this is the template festivalReturn is plugged into
-    var festivalDisplay = {
+    let festivalDisplay = {
       id: 'unclustered-point',
       type: 'circle',
       source: {
@@ -61,46 +55,14 @@ $(function () {
       }
     }
 
-      // adds layers to the map based on features in festivalReturn
     map.addLayer(festivalDisplay)
-
-    // creates the bounding box and zooms to it in the map
-    var longMin = 1000
-    var longMax = -1000
-    var latMin = 90 // Updated to true min
-    var latMax = -90 // Updated to true max
-
-    for (let i = 0; i < festivalReturn.length; i++) {
-      if (festivalReturn[i].geometry.coordinates[0] < longMin) {
-        longMin = festivalReturn[i].geometry.coordinates[0]
-      } else {
-        longMin = longMin
-      }
-
-      if (festivalReturn[i].geometry.coordinates[1] < latMin) {
-        latMin = festivalReturn[i].geometry.coordinates[1]
-      } else {
-        latMin = latMin
-      }
-
-      if (festivalReturn[i].geometry.coordinates[0] > longMax) {
-        longMax = festivalReturn[i].geometry.coordinates[0]
-      } else {
-        longMax = longMax
-      }
-
-      if (festivalReturn[i].geometry.coordinates[1] > latMax) {
-        latMax = festivalReturn[i].geometry.coordinates[1]
-      } else {
-        latMax = latMax
-      }
-    }
-
-    map.fitBounds([[longMin, latMin], [longMax, latMax]], { padding: 50 })
+    // debugger
+    let boundBoxParams = helpers.getBoundingBox(festivalReturn.features)
+    map.fitBounds(boundBoxParams, { padding: 50 })
 
     // adds divs to bottom of page with info
-    var festName = ''
-    var festCity = ''
+    let festName
+    let festCity
 
     for (let i = 0; i < festivalReturn.length; i++) {
       festCity = festivalReturn[i].properties.city
@@ -124,7 +86,8 @@ $(function () {
           .setHTML(`<h3>
                       ${e.features[0].properties.name}
                     </h3>
-                    <h4>${e.features[0].properties.city}
+                    <h4>
+                      ${e.features[0].properties.city}
                     </h4>`)
           .addTo(map)
       })
@@ -141,3 +104,20 @@ $(function () {
     }
   })
 })
+
+const helpers = {
+  getBoundingBox: (festivals) => {
+    let longs = []
+    let lats = []
+    for (let festival of festivals) {
+      longs.push(festival.geometry.coordinates[0])
+      lats.push(festival.geometry.coordinates[1])
+    }
+    // orders coords lowest-to-highest so we can get NE & SW corners
+    longs.sort(function (a, b) { return a - b })
+    lats.sort(function (a, b) { return a - b })
+
+    let boundBoxParams = [[longs[0], lats[0]], [longs[longs.length - 1], lats[lats.length - 1]]]
+    return boundBoxParams
+  }
+}
