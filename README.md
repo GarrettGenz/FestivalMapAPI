@@ -26,7 +26,6 @@
 * run `$ virtualenv --no-site-packages --distribute -p python virtualPy && virtualPy\Scripts\activate && pip install -r requirements.txt` to setup virtualenv and install the required packages from requirements.txt
 * run `$ set FLASK_APP=app/server.py` to set the flask env variable to tell flask where the app is
 * run `$ set FLASK_DEBUG=1` to set the flask server to debug mode with full logging & debug capability & auto-reload on change of python files
-* rename .example.env to be .env and set the database variables
 * run `$ flask run` to launch the app
 * navigate to 127.0.0.1:5000 to open the web interface
 
