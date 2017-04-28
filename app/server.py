@@ -40,8 +40,8 @@ def getFestivals():
 
     # Query the database for any festival that has one of the artists entered
     cur.execute("""SELECT
-                f.latitude,
                 f.longitude,
+				f.latitude,
             f.name,
                 f.start_date,
             f.end_date,
