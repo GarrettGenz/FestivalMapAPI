@@ -60,7 +60,16 @@ WHERE	a.name IN ('%s')""" % ("','".join([str(i) for i in args])))
 
     for festival in festivals:
         festivalList.append({ "type": "Feature",
-                             "geometry": {"type": "Point", "coordinates": [festival[0], festival[1]]},
-                             "properties": {"name": festival[2], "startDate": festival[3], "endDate": festival[4], "artists": festival[5]}})
+                             "geometry": {
+                                "type": "Point",
+                                "coordinates": [festival[0], festival[1]]
+                                },
+                             "properties": {
+                                "name": festival[2],
+                                "startDate": festival[3],
+                                "endDate": festival[4],
+                                "artists": festival[5]
+                              }
+                            })
 
     return jsonify(type = 'FeatureCollection', features = festivalList)
