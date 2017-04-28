@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<title>Find Music Festivals</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.css' rel='stylesheet' />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css">
+
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Sigmar One">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Oswald">
+
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+<script type="text/javascript" src="{{ url_for('static', filename='main.js') }}">
+
+</script>
+</head>
+  <body>
+    <div class="container-fluid">
+      <div class="page-header">
+          <h2 class="text-center" style="font-size: 3em;">FIND YOUR FESTIVAL!</h2>
+      </div>
+      <div class="jumbotron">
+        <div class="row">
+          <div class="col-lg-3 col-mid-4 col-sm-4 col-xs-12" style="padding-top:50px;">
+            <p style="font-size: 15px; color: gray;">Choose criteria below to search for festivals</p>
+            <div class="input-group" style="width: 100%">
+              <input id='band-search' type="text" class="form-control" placeholder="Search by Band">
+            </div>
+            <div class="input-group" style="padding-top:20px; width: 100%">
+              <input id='zip-search' type="text" class="form-control" placeholder="Search by Zip">
+            </div>
+            <div class="input-daterange input-group" id="datepicker" style="padding-top:20px;">
+              <input id='start-date-search'type="text" class="form-control" placeholder="mm/dd/yy" name="start" />
+              <span style="color: #2F4F65;" class="input-group-addon">to</span>
+              <input id='end-date-search'type="text" class="form-control" placeholder="mm/dd/yy" name="end" />
+            </div>
+            <div class="input-group" style="padding-top:20px; padding-bottom: 30px; margin:auto;">
+              <button id='search-button' class="btn btn-default" style="color: #2F4F65; background-color:#D4844E; width: 100px;" type="button">Search</button>
+            </div>
+          </div>
+          <div class="col-lg-9 col-mid-8 col-sm-8 col-xs-12">
+            <div id='map'></div>
+          </div>
+        </div>
+      </div>
+      <div id='festivalTableContainer' class='row' style="margin-bottom:20px;">
+        <!--<div id="festivalTable" class="col-lg-10 col-mid-10 col-sm-10 col-xs-12 col-lg-offset-1 col-mid-offset-1 col-sm-offset-1" style="margin-top:10px;">
+          <div class="col-lg-3 col-mid-3 col-sm-3 col-xs-3">
+            <h3 style="padding-bottom:10px;"><a href=# style="color:#2F4F65;">Coachella</a></h3>
+          </div>
+          <div style="padding-top:15px;" class="col-lg-3 col-mid-3 col-sm-3 col-xs-3">
+            <h4>Indio, CA</h4>
+          </div>
+        </div>
+        <div id='festivalTable' class="col-lg-10 col-mid-10 col-sm-10 col-xs-12 col-lg-offset-1 col-mid-offset-1 col-sm-offset-1" style="margin-top:10px;">
+          <div class="col-lg-3 col-mid-3 col-sm-3 col-xs-3">
+            <h3 style="padding-bottom:10px;"><a href=# style="color:#2F4F65;">Sasquatch</a></h3>
+          </div>
+          <div style="padding-top:15px;" class="col-lg-3 col-mid-3 col-sm-3 col-xs-3">
+            <h4>George, WA</h4>
+          </div>
+        </div>-->
+      </div>
+      <div id="test">
+      </div>
+    </div>
+  </body>
+</html>

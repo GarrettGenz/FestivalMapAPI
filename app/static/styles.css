@@ -1,0 +1,43 @@
+
+body{
+  background-color: #2F4F65;
+}
+
+.page-header{
+  color: #F2FA57;
+  border-bottom-width: 3px;
+  font-family: Sigmar One;
+  border-bottom-color: #D4844E;
+
+}
+.jumbotron{
+  background-color:  #F2FA57;
+    border-style: solid;
+    border-width: 2px;
+  font-family: Oswald;
+}
+
+.table{
+  font-family: Oswald;
+  color: #D4844E;
+}
+
+#map{
+    border-style: solid;
+    border-width: 2px;
+  height: 350px;
+}
+#search-button{
+  opacity: 0.8;
+}
+#festivalTable{
+  background-color: #D4844E;
+  padding-left:30px;
+  border-radius:5px;
+  color:#F2FA57;
+}
+
+.mapboxgl-popup {
+        max-width: 400px;
+        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    }
