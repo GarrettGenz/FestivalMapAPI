@@ -8,6 +8,7 @@
 * virtualenv
 
 #### How to run app
+* Clone this app to your local destination (desktop on OSX)
 * Ensure you have Homebrew installed
 * Install python3 with `$ brew install python3`
 * Ensure you have virtualenv installed with `$ pip3 install virtualenv`
@@ -19,3 +20,6 @@
 
 
 // virtualenv -p python3 virtualPy
+
+#### Making Changes
+Add your changes and commit them. Please run `$ git pull --rebase origin develop` to make sure any changes that are upstream from your instance are pulled in and added. If there are any merge conflicts, solve them, add the files, commit them, re-pull with rebase, and then run `$ git push origin develop` now that nothing you added will be overwriting stuff on GitHub. 
