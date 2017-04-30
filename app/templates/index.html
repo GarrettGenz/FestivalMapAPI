@@ -18,6 +18,10 @@
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Sigmar One">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Oswald">
 
+<!-- RELATED TO LINE 25 & 26, BELOW: You generally do not want any CSS or javascript in the main
+body of the document for reasons of separation of concerns, so I moved them to their own files and referenced them here
+using Flask's static file reference system. A folder called static, within the app directory,
+can be used to programatically access files instead of referencing them with relative URLs. -->
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
 <script type="text/javascript" src="{{ url_for('static', filename='main.js') }}">
 

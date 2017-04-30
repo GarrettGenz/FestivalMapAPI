@@ -1,4 +1,16 @@
+# this file contains all of the things we don't wanted uploaded to github
+
+# ignores the .env file, so that keys and secrets (usernames and passwords, basically)
+# are not publicly browsable by whoever.
 .env
+
+# ignores the entire virtualPy directory, which contains our virtual python environment
+# and our third-party packages. this prevents all of the packages from being uploaded to github.
+# they don't need to be uploaded, since they are installed with pip, the python package manager.
 virtualPy
+
+# ignores .pyc files, which are generated files for interpreting python
 *.pyc
+
+# ignores python cache
 __pycache__

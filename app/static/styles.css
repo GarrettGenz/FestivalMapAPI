@@ -1,43 +1,122 @@
+/* In the future, we'll try to use a processor for CSS called Sass.
+It lets you get around limitations of native CSS like the fact that you can't nest.
+So, you can't do this with normal CSS:
+body {
+  .paragraphOne {
+    p {
+      color: red;
+    }
 
-body{
+    a {
+      color: blue;
+    }
+  }
+  .someContent {
+    padding: 15px;
+  }
+}
+
+Sass, or SCSS, preprocesses the code you write, and turns it into CSS.
+So the above style would get turned into CSS that looks like this:
+
+body .paragraphOne p {
+  color: blue;
+}
+
+body .paragraphOne a {
+  color: blue;
+}
+
+body .someContent {
+  padding: 15px;
+}
+
+Much easier to read and understand the former, as it groups the rules properly.
+
+Leave a space between the rule and its paranthese.
+So this,
+p {
+  color: blue;
+}
+Not
+p{
+  color: blue;
+}
+Leave a blank line between rules.
+This:
+p {
+ color: blue;
+}
+
+a {
+  color: red;
+}
+
+Not
+p {
+ color: blue;
+}
+a {
+  color: red;
+}
+
+Keep tabs consistent.
+This
+p {
+  color: blue;
+  color: red;
+}
+not this
+p {
+  color: blue;
+      color: red;
+}
+
+These things all make the CSS more readable, which believe it or not, can become
+a serious fucking hassle with projects as they grow and have multiple people working on them.
+*/
+
+body {
   background-color: #2F4F65;
 }
 
-.page-header{
+.page-header {
   color: #F2FA57;
   border-bottom-width: 3px;
   font-family: Sigmar One;
   border-bottom-color: #D4844E;
-
 }
-.jumbotron{
+
+.jumbotron {
   background-color:  #F2FA57;
-    border-style: solid;
-    border-width: 2px;
+  border-style: solid;
+  border-width: 2px;
   font-family: Oswald;
 }
 
-.table{
+.table {
   font-family: Oswald;
   color: #D4844E;
 }
 
-#map{
-    border-style: solid;
-    border-width: 2px;
+#map {
+  border-style: solid;
+  border-width: 2px;
   height: 350px;
 }
-#search-button{
+
+#search-button {
   opacity: 0.8;
 }
-#festivalTable{
+
+#festivalTable {
   background-color: #D4844E;
   padding-left:30px;
   border-radius:5px;
   color:#F2FA57;
 }
 
-.mapboxgl-popup {
-        max-width: 400px;
-        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    }
+.mapboxgl-popup  {
+  max-width: 400px;
+  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}

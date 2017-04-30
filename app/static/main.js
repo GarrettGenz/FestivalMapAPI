@@ -1,5 +1,19 @@
 /* global $, mapboxgl */
 
+// the lines above declare global objects $ and mapboxgl for our linter, StandardJS.
+// this stops the linter from throwing errors in the code editor since it doens't know about jQuery
+// and mapboxgl existing since they are referenced with URLs in the index.html file.
+
+// all the javascript code has been changed to be in keeping with StandardJS style.
+// You can see standardJS at https://standardjs.com/
+// It has linting plugins for many common text editors, such as Sublime or Atom.
+// A linter is a tool that scans through the code and checks to see if it is in accordance
+// with certain rules. If it is not, the editor will show you.
+// This is a way to make your javascript code more readable, and keep everyone writing it in
+// a somewhat similar fashion. It might seem a little odd at first, but it makes things much easier
+// as you continue to collaborate and work on the same code, since you're all following
+// the same guidelines for code formatting.
+
 $(function () {
   mapboxgl.accessToken = 'pk.eyJ1IjoibGFyb2JlcnRzMiIsImEiOiJjajB5MXp5MGcwMXExMnFxZHh0dnE3NHJ5In0.PVynsiXplfPuQG5DLsF14g'
   let map = new mapboxgl.Map({
@@ -27,7 +41,7 @@ $(function () {
     // let startDate = $("#start-date-search").val()
     // let endDate = $("#end-date-search").val()
 
-    var festivalReturn
+    let festivalReturn
 
     // Make API call to populate festivalReturn. Need to set async to false otherwise the function runs before the variable is initialized
     $.ajax({
@@ -56,7 +70,12 @@ $(function () {
     }
 
     map.addLayer(festivalDisplay)
-    // debugger
+    // instead of having all of the logic of getting box bounds inside of the event listener,
+    // (the $('#search-button').click thing), move the raw math calculations into a helper object
+    // that lives outside of the document ready event and outside of the DOM manipulations and listeners.
+    // DOM == Document Object Model, basically, the webpage itself.
+    // Separation of concerns applies here. In fact, nearly all of the above (and some of the below) should be moved into other
+    // more specific functions, but they can stay for now.
     let boundBoxParams = helpers.getBoundingBox(festivalReturn.features)
     map.fitBounds(boundBoxParams, { padding: 50 })
 
@@ -64,6 +83,10 @@ $(function () {
     let festName
     let festCity
 
+    // the below could be changed to use a for (let member of enumerableObject) syntax for clarity
+    // I changed it to use the multiline JS syntax which uses backticks, ``, as quotes.
+    // this lets you break lines, as well as use the string interpolation feature, `string here, ${variableHere}`
+    // this is much more readable than using a single line of normal quotes, or by using "string" + variable + "more string"
     for (let i = 0; i < festivalReturn.length; i++) {
       festCity = festivalReturn[i].properties.city
       festName = festivalReturn[i].properties.name
@@ -105,18 +128,28 @@ $(function () {
   })
 })
 
+
+// This is the helpers object. It doesn't need to worry about being inside of the document ready event,
+// since it will not deal with the document at all, only with variables that are passed to its functions.
+// It is declared as a const since it is a constant; its value will not change. It is simply a collection
+// of helper functions that do things non-DOM related.
 const helpers = {
   getBoundingBox: (festivals) => {
+    // First initialize two empty arrays, one to hold latitudes, and one for longitudes
     let longs = []
     let lats = []
+    // iterate over the festivals that are passed to the function.
+    // You can use syntax: `for (let member of enumerableObject)` instead of a typical for loop
+    // in fact, the syntax before roughly is the normal syntax now.
     for (let festival of festivals) {
       longs.push(festival.geometry.coordinates[0])
       lats.push(festival.geometry.coordinates[1])
     }
-    // orders coords lowest-to-highest so we can get NE & SW corners
+    // orders coordinates lowest-to-highest.
     longs.sort(function (a, b) { return a - b })
     lats.sort(function (a, b) { return a - b })
-
+    // to get a proper bound box, take the lowest long and latitude value of all of the points for the SW corner,
+    // and then take the highest long and lat values of all points for the NE corner.
     let boundBoxParams = [[longs[0], lats[0]], [longs[longs.length - 1], lats[lats.length - 1]]]
     return boundBoxParams
   }
