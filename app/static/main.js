@@ -20,7 +20,7 @@ $(function () {
     container: 'map', // container id
     style: 'mapbox://styles/laroberts2/cj0y98x3000en2rntgs8c2orb',
     center: [-96, 37.8], // starting position
-    zoom: 0 // starting zoom
+    zoom: 2.8 // starting zoom
   })
 
   $('.input-daterange').datepicker({
@@ -54,13 +54,68 @@ $(function () {
       }
     })
 
-    let festivalDisplay = {
+    let clusteredPoint = {
+	        id: "clusters",
+	        type: "circle",
+					source: {
+		        'type': 'geojson',
+		        'data': festivalReturn,
+            cluster: true,
+            clusterMaxZoom: 14, // Max zoom to cluster points on
+            clusterRadius: 20 // Radius of each cluster when clustering points (defaults to 50)
+          },
+	        filter: ["has", "point_count"],
+	        paint: {
+	            "circle-color": {
+	                property: "point_count",
+	                type: "interval",
+	                stops: [
+	                    [0, "#51bbd6"],
+	                    [100, "#f1f075"],
+	                    [750, "#f28cb1"],
+	                ]
+	            },
+	            "circle-radius": {
+	                property: "point_count",
+	                type: "interval",
+	                stops: [
+	                    [0, 20],
+	                    [100, 30],
+	                    [750, 40]
+	                ]
+	            }
+	        }
+	    }
+
+    let clusteredLabel = {
+        id: "cluster-count",
+        type: "symbol",
+        source: {
+          'type': 'geojson',
+          'data': festivalReturn,
+          cluster: true,
+          clusterMaxZoom: 14, // Max zoom to cluster points on
+          clusterRadius: 20 // Radius of each cluster when clustering points (defaults to 50)
+        },
+        filter: ["has", "point_count"],
+        layout: {
+            "text-field": "{point_count_abbreviated}",
+            "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+            "text-size": 12
+        }
+    }
+
+    let unclusteredPoint = {
       id: 'unclustered-point',
       type: 'circle',
       source: {
         'type': 'geojson',
-        'data': festivalReturn
+        'data': festivalReturn,
+        cluster: true,
+        clusterMaxZoom: 14, // Max zoom to cluster points on
+        clusterRadius: 20 // Radius of each cluster when clustering points (defaults to 50)
       },
+      filter: ["!has", "point_count"],
       paint: {
         'circle-color': '#11b4da',
         'circle-radius': 8,
@@ -69,7 +124,9 @@ $(function () {
       }
     }
 
-    map.addLayer(festivalDisplay)
+    map.addLayer(clusteredPoint)
+    map.addLayer(clusteredLabel)
+    map.addLayer(unclusteredPoint)
     // instead of having all of the logic of getting box bounds inside of the event listener,
     // (the $('#search-button').click thing), move the raw math calculations into a helper object
     // that lives outside of the document ready event and outside of the DOM manipulations and listeners.
@@ -87,9 +144,9 @@ $(function () {
     // I changed it to use the multiline JS syntax which uses backticks, ``, as quotes.
     // this lets you break lines, as well as use the string interpolation feature, `string here, ${variableHere}`
     // this is much more readable than using a single line of normal quotes, or by using "string" + variable + "more string"
-    for (let i = 0; i < festivalReturn.length; i++) {
-      festCity = festivalReturn[i].properties.city
-      festName = festivalReturn[i].properties.name
+    for (let i = 0; i < festivalReturn.features.length; i++) {
+      festCity = festivalReturn.features[i].properties.city
+      festName = festivalReturn.features[i].properties.name
       $('#festivalTableContainer').append(`<div id='festivalTable' class='col-lg-10 col-mid-10 col-sm-10 col-xs-12 col-lg-offset-1 col-mid-offset-1 col-sm-offset-1' style='margin-top:10px'>
         <div class='col-lg-3 col-mid-3 col-sm-3 col-xs-3'>
           <h3 style='padding-bottom:10px'>
@@ -124,6 +181,23 @@ $(function () {
       map.on('mouseleave', 'unclustered-point', function () {
         map.getCanvas().style.cursor = ''
       })
+
+      // Zooms the map in on a cluster when it is clicked.
+      map.on('click', 'clusters', function (e) {
+          map.easeTo({zoom: map.getZoom()+1,
+                      around: e.features[0].geometry.coordinates})
+      })
+
+      // Change the cursor to a pointer when the mouse is over the cluster layer.
+      map.on('mouseenter', 'clusters', function () {
+        map.getCanvas().style.cursor = 'pointer'
+      })
+
+      // Change it back to a pointer when it leaves.
+      map.on('mouseleave', 'clusters', function () {
+        map.getCanvas().style.cursor = ''
+      })
+
     }
   })
 })
