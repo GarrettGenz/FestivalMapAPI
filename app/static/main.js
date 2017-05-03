@@ -42,13 +42,18 @@ $(function () {
     // let endDate = $("#end-date-search").val()
 
     let festivalReturn
+	
+	var searchData = $.param({
+						artist: $("#band-search").val().split(',') // Turn the comma separated artists into an array
+						}, true);
 
     // Make API call to populate festivalReturn. Need to set async to false otherwise the function runs before the variable is initialized
     $.ajax({
       // url: "https://pacific-thicket-87363.herokuapp.com/festivals?artist=Chance the Rapper",
-      url: '/festivals?artist=Chance the Rapper',
+      url: '/festivals',
+	  type: "get",
+	  data: searchData,
       async: false,
-      dataType: 'json',
       success: function (data) {
         festivalReturn = data
       }
