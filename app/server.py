@@ -51,12 +51,15 @@ def getFestivals():
     cur.execute("""SELECT
                 f.longitude,
                 f.latitude,
-            f.name,
+				f.name,
                 f.start_date,
-            f.end_date,
+				f.end_date,
+				f.city,
+				f.state,
+				f.website,
             -- Get a complete list of artists for each festival
-            (SELECT json_agg(artists.name) FROM artists JOIN festivalartists ON artists.artistid = festivalartists.artistid
-            WHERE festivalartists.festivalid = f.festivalid) as artists
+				(SELECT json_agg(artists.name) FROM artists JOIN festivalartists ON artists.artistid = festivalartists.artistid
+				WHERE festivalartists.festivalid = f.festivalid) as artists
 FROM	festivalartists fa JOIN festivals f ON fa.festivalid = f.festivalid
           JOIN artists a ON fa.artistid = a.artistid
 WHERE	a.name IN ('%s')""" % ("','".join([str(i) for i in args])))
@@ -81,7 +84,10 @@ WHERE	a.name IN ('%s')""" % ("','".join([str(i) for i in args])))
                                 "name": festival[2],
                                 "startDate": festival[3],
                                 "endDate": festival[4],
-                                "artists": festival[5]
+								"city": festival[5],
+								"state": festival[6],
+								"website": festival[7],
+                                "artists": festival[8]
                               }
                             })
 
